@@ -3,6 +3,25 @@
 All notable changes to `aman-claude-code` (formerly `aman-plugin`) are
 documented in this file.
 
+## 3.2.0-alpha.13 — 2026-05-12
+
+### Fixed
+- **Hook command quoting in `hooks/hooks.json`.** Switched
+  `'${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd'` →
+  `"${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd"` for both `SessionStart`
+  and `UserPromptSubmit` entries. Claude Code 2.1.139+ passes
+  `CLAUDE_PLUGIN_ROOT` as an environment variable rather than pre-
+  substituting it into the command string; `/bin/sh` does not expand
+  variables inside single quotes, so the hook failed at startup with:
+
+  ```
+  /bin/sh: ${CLAUDE_PLUGIN_ROOT}/hooks/run-hook.cmd: No such file or directory
+  ```
+
+  Matches the quoting pattern used by `claude-plugins-official/superpowers`.
+  No behavior change beyond fixing the startup error — the wake-word /
+  session-start context injects again on hosts running 2.1.139+.
+
 ## 3.2.0-alpha.12 — 2026-04-26
 
 ### Added — Projects skill + SessionStart hook integration
