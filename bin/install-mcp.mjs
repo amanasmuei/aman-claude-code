@@ -26,7 +26,9 @@ import * as os from "node:os";
 const ENTRY_NAME = "aman";
 const ENTRY_VALUE = {
   command: "npx",
-  args: ["-y", "@aman_asmuei/aman-mcp@^0.6.0"],
+  // aman-agentic bundles the MCP server (bin: aman-mcp) — supersedes the
+  // deprecated @aman_asmuei/aman-mcp package.
+  args: ["-y", "-p", "aman-agentic@^0.1.0", "aman-mcp"],
   env: {
     AMAN_MCP_SCOPE: "dev:plugin",
   },
